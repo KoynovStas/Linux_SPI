@@ -30,8 +30,35 @@ Linux_SPI::~Linux_SPI()
 
 
 
+int Linux_SPI::dev_open(const char *spi_dev)
+{
+
+    if( !spi_dev )
+    {
+        _errno = ERROR_BAD_PARAM;
+        return -1;
+    }
+
+
+    dev_close(); //close old dev
+
+
+    _dev_fd = open(spi_dev, O_RDWR);
+    if( _dev_fd == -1 )
+    {
+        _errno = ERROR_CANT_OPEN_DEV;
+        return -1;
+    }
+
+
+    return 0; //good job
+}
+
+
+
 void Linux_SPI::dev_close()
 {
+
     if( _dev_fd != -1 )
         close(_dev_fd);
 

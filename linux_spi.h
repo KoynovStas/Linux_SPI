@@ -32,6 +32,7 @@ class Linux_SPI
         ~Linux_SPI();
 
 
+         int  dev_open(const char *spi_dev);
          void dev_close(void);
 
 
