@@ -40,7 +40,8 @@ class Linux_SPI
     private:
 
 
-        SPI_Error  _errno;
+         SPI_Error  _errno;
+         int        _dev_fd;
 };
 
 

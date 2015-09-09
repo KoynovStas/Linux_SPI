@@ -15,7 +15,9 @@
 
 
 
-Linux_SPI::Linux_SPI()
+Linux_SPI::Linux_SPI() :
+    _errno(ERROR_DEV_NOT_OPEN),
+    _dev_fd(-1)
 {
 }
 
