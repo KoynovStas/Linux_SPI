@@ -69,6 +69,51 @@ void Linux_SPI::dev_close()
 
 
 
+int Linux_SPI::set_mode(uint8_t mode)
+{
+
+    if( _dev_fd == -1 )
+        return -1;
+
+
+    if( ioctl(_dev_fd, SPI_IOC_WR_MODE, &mode) == -1 )
+    {
+        _errno = ERROR_CANT_SET_MODE;
+        return -1;
+    }
+
+
+    return 0; //good job
+}
+
+
+
+int Linux_SPI::get_mode(uint8_t *mode)
+{
+
+    if( _dev_fd == -1 )
+        return -1;
+
+
+    if( !mode )
+    {
+        _errno = ERROR_BAD_PARAM;
+        return -1;
+    }
+
+
+    if( ioctl(_dev_fd, SPI_IOC_RD_MODE, mode) == -1 )
+    {
+        _errno = ERROR_CANT_GET_MODE;
+        return -1;
+    }
+
+
+    return 0; //good job
+}
+
+
+
 const char *Linux_SPI::strerror(Linux_SPI::SPI_Error error)
 {
 

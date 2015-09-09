@@ -35,6 +35,9 @@ class Linux_SPI
          int  dev_open(const char *spi_dev);
          void dev_close(void);
 
+         int  set_mode(uint8_t mode);
+         int  get_mode(uint8_t *mode);
+
 
          SPI_Error get_errno(void){ return _errno; }
 
