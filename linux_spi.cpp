@@ -250,6 +250,40 @@ int Linux_SPI::read(const void *buf, uint32_t len)
 
 
 
+int Linux_SPI::write(const void *buf, uint32_t len)
+{
+
+    int ret;
+
+    if( _dev_fd == -1 )
+        return -1;
+
+
+    if( !buf )
+    {
+        _errno = ERROR_BAD_PARAM;
+        return -1;
+    }
+
+
+    _spi_tr.tx_buf = (uintptr_t)buf;
+    _spi_tr.rx_buf = (uintptr_t)NULL;
+    _spi_tr.len    = len;
+
+
+    ret = ioctl(_dev_fd, SPI_IOC_MESSAGE(1), &_spi_tr);
+    if( ret < 1 )
+    {
+        _errno = ERROR_CANT_WRITE;
+        return -1;
+    }
+
+
+    return ret; //good job
+}
+
+
+
 const char *Linux_SPI::strerror(Linux_SPI::SPI_Error error)
 {
 
