@@ -8,6 +8,8 @@
 
 
 
+#include "linux_spi.h"
+
 
 
 #define TEST_MAJOR_VERSION  (1)
