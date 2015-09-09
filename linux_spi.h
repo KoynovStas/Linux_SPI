@@ -44,6 +44,9 @@ class Linux_SPI
          int  set_bits_per_word(uint8_t bits_per_word);
          int  get_bits_per_word(uint8_t *bits_per_word);
 
+         int  set_max_speed_hz(uint32_t max_speed_hz);
+         int  get_max_speed_hz(uint32_t *max_speed_hz);
+
 
          SPI_Error get_errno(void){ return _errno; }
 

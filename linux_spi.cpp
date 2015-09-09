@@ -163,6 +163,51 @@ int Linux_SPI::get_bits_per_word(uint8_t *bits_per_word)
 
 
 
+int Linux_SPI::set_max_speed_hz(uint32_t max_speed_hz)
+{
+
+    if( _dev_fd == -1 )
+        return -1;
+
+
+    if( ioctl(_dev_fd, SPI_IOC_WR_MAX_SPEED_HZ, &max_speed_hz) == -1 )
+    {
+        _errno = ERROR_CANT_SET_SPEED;
+        return -1;
+    }
+
+
+    return 0; //good job
+}
+
+
+
+int Linux_SPI::get_max_speed_hz(uint32_t *max_speed_hz)
+{
+
+    if( _dev_fd == -1 )
+        return -1;
+
+
+    if( !max_speed_hz )
+    {
+        _errno = ERROR_BAD_PARAM;
+        return -1;
+    }
+
+
+    if( ioctl(_dev_fd, SPI_IOC_RD_MAX_SPEED_HZ, max_speed_hz) == -1 )
+    {
+        _errno = ERROR_CANT_GET_SPEED;
+        return -1;
+    }
+
+
+    return 0; //good job
+}
+
+
+
 const char *Linux_SPI::strerror(Linux_SPI::SPI_Error error)
 {
 
