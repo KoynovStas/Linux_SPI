@@ -3,6 +3,7 @@
 
 
 #include <stdint.h>
+#include <linux/spi/spidev.h>
 
 
 
@@ -46,6 +47,8 @@ class Linux_SPI
 
         int  set_max_speed_hz(uint32_t max_speed_hz);
         int  get_max_speed_hz(uint32_t *max_speed_hz);
+
+        int  read(const void *buf, uint32_t len);
 
 
         SPI_Error get_errno(void){ return _errno; }

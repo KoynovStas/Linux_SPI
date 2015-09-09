@@ -23,6 +23,8 @@ Linux_SPI::Linux_SPI() :
     _errno(ERROR_DEV_NOT_OPEN),
     _dev_fd(-1)
 {
+
+    memset(&_spi_tr, 0, sizeof(struct spi_ioc_transfer));
 }
 
 
@@ -210,6 +212,40 @@ int Linux_SPI::get_max_speed_hz(uint32_t *max_speed_hz)
 
 
     return 0; //good job
+}
+
+
+
+int Linux_SPI::read(const void *buf, uint32_t len)
+{
+
+    int ret;
+
+    if( _dev_fd == -1 )
+        return -1;
+
+
+    if( !buf )
+    {
+        _errno = ERROR_BAD_PARAM;
+        return -1;
+    }
+
+
+    _spi_tr.tx_buf = (uintptr_t)NULL;
+    _spi_tr.rx_buf = (uintptr_t)buf;
+    _spi_tr.len    = len;
+
+
+    ret = ioctl(_dev_fd, SPI_IOC_MESSAGE(1), &_spi_tr);
+    if( ret < 1 )
+    {
+        _errno = ERROR_CANT_READ;
+        return -1;
+    }
+
+
+    return ret; //good job
 }
 
 
