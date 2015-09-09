@@ -7,6 +7,10 @@
 #include <fcntl.h>
 
 
+#include <linux/types.h>
+#include <linux/spi/spidev.h>
+#include <sys/ioctl.h>
+
 
 #include "linux_spi.h"
 
@@ -105,6 +109,51 @@ int Linux_SPI::get_mode(uint8_t *mode)
     if( ioctl(_dev_fd, SPI_IOC_RD_MODE, mode) == -1 )
     {
         _errno = ERROR_CANT_GET_MODE;
+        return -1;
+    }
+
+
+    return 0; //good job
+}
+
+
+
+int Linux_SPI::set_bits_per_word(uint8_t bits_per_word)
+{
+
+    if( _dev_fd == -1 )
+        return -1;
+
+
+    if( ioctl(_dev_fd, SPI_IOC_WR_BITS_PER_WORD, &bits_per_word) == -1 )
+    {
+        _errno = ERROR_CANT_SET_BITS;
+        return -1;
+    }
+
+
+    return 0; //good job
+}
+
+
+
+int Linux_SPI::get_bits_per_word(uint8_t *bits_per_word)
+{
+
+    if( _dev_fd == -1 )
+        return -1;
+
+
+    if( !bits_per_word )
+    {
+        _errno = ERROR_BAD_PARAM;
+        return -1;
+    }
+
+
+    if( ioctl(_dev_fd, SPI_IOC_RD_BITS_PER_WORD, bits_per_word) == -1 )
+    {
+        _errno = ERROR_CANT_GET_BITS;
         return -1;
     }
 

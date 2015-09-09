@@ -2,6 +2,9 @@
 #define LINUX_SPI_H
 
 
+#include <stdint.h>
+
+
 
 
 
@@ -37,6 +40,9 @@ class Linux_SPI
 
          int  set_mode(uint8_t mode);
          int  get_mode(uint8_t *mode);
+
+         int  set_bits_per_word(uint8_t bits_per_word);
+         int  get_bits_per_word(uint8_t *bits_per_word);
 
 
          SPI_Error get_errno(void){ return _errno; }
