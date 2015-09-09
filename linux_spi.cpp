@@ -284,6 +284,35 @@ int Linux_SPI::write(const void *buf, uint32_t len)
 
 
 
+int Linux_SPI::send_tr(spi_ioc_transfer *trs, uint32_t num_trs)
+{
+
+    int ret;
+
+    if( _dev_fd == -1 )
+        return -1;
+
+
+    if( !trs )
+    {
+        _errno = ERROR_BAD_PARAM;
+        return -1;
+    }
+
+
+    ret = ioctl(_dev_fd, SPI_IOC_MESSAGE(num_trs), trs);
+    if( ret < 1 )
+    {
+        _errno = ERROR_CANT_SEND_TR;
+        return -1;
+    }
+
+
+    return ret; //good job
+}
+
+
+
 const char *Linux_SPI::strerror(Linux_SPI::SPI_Error error)
 {
 

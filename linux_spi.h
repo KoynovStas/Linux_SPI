@@ -51,6 +51,8 @@ class Linux_SPI
         int  read(const void *buf, uint32_t len);
         int  write(const void *buf, uint32_t len);
 
+        int  send_tr(struct spi_ioc_transfer *trs, uint32_t num_trs);
+
 
         SPI_Error get_errno(void){ return _errno; }
 
