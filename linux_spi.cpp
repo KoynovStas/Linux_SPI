@@ -25,6 +25,19 @@ Linux_SPI::Linux_SPI() :
 
 Linux_SPI::~Linux_SPI()
 {
+    dev_close();
+}
+
+
+
+void Linux_SPI::dev_close()
+{
+    if( _dev_fd != -1 )
+        close(_dev_fd);
+
+
+    _dev_fd = -1;
+    _errno  = ERROR_DEV_NOT_OPEN;
 }
 
 
