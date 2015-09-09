@@ -35,32 +35,32 @@ class Linux_SPI
         ~Linux_SPI();
 
 
-         int  dev_open(const char *spi_dev);
-         void dev_close(void);
+        int  dev_open(const char *spi_dev);
+        void dev_close(void);
 
-         int  set_mode(uint8_t mode);
-         int  get_mode(uint8_t *mode);
+        int  set_mode(uint8_t mode);
+        int  get_mode(uint8_t *mode);
 
-         int  set_bits_per_word(uint8_t bits_per_word);
-         int  get_bits_per_word(uint8_t *bits_per_word);
+        int  set_bits_per_word(uint8_t bits_per_word);
+        int  get_bits_per_word(uint8_t *bits_per_word);
 
-         int  set_max_speed_hz(uint32_t max_speed_hz);
-         int  get_max_speed_hz(uint32_t *max_speed_hz);
+        int  set_max_speed_hz(uint32_t max_speed_hz);
+        int  get_max_speed_hz(uint32_t *max_speed_hz);
 
 
-         SPI_Error get_errno(void){ return _errno; }
+        SPI_Error get_errno(void){ return _errno; }
 
-         static const char* strerror(SPI_Error error);
+        static const char* strerror(SPI_Error error);
 
 
     private:
 
 
-         SPI_Error  _errno;
-         int        _dev_fd;
+        SPI_Error  _errno;
+        int        _dev_fd;
 
 
-         struct spi_ioc_transfer _spi_tr;
+        struct spi_ioc_transfer _spi_tr;
 };
 
 
