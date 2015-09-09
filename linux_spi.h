@@ -32,6 +32,15 @@ class Linux_SPI
         ~Linux_SPI();
 
 
+         SPI_Error get_errno(void){ return _errno; }
+
+         static const char* strerror(SPI_Error error);
+
+
+    private:
+
+
+        SPI_Error  _errno;
 };
 
 
