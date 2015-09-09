@@ -58,6 +58,9 @@ class Linux_SPI
 
          SPI_Error  _errno;
          int        _dev_fd;
+
+
+         struct spi_ioc_transfer _spi_tr;
 };
 
 

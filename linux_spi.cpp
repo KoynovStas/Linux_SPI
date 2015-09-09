@@ -132,6 +132,9 @@ int Linux_SPI::set_bits_per_word(uint8_t bits_per_word)
     }
 
 
+    _spi_tr.bits_per_word = bits_per_word;
+
+
     return 0; //good job
 }
 
@@ -175,6 +178,9 @@ int Linux_SPI::set_max_speed_hz(uint32_t max_speed_hz)
         _errno = ERROR_CANT_SET_SPEED;
         return -1;
     }
+
+
+    _spi_tr.speed_hz = max_speed_hz;
 
 
     return 0; //good job
