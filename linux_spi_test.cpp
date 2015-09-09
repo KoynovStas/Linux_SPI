@@ -95,12 +95,125 @@ void processing_cmd(int argc, char *argv[])
 
 
 
+void test_read_write(Linux_SPI *spi_dev)
+{
+
+    uint16_t val = 100;
+    int ret;
+
+
+    ret = spi_dev->write(&val, sizeof(val));
+
+    printf("send 100 ret == %d\n", ret);
+
+
+    ret = spi_dev->read(&val, sizeof(val));
+
+    printf("read ret == %d  val == %d\n", ret, val);
+
+}
+
+
+
+void test_send_tr(Linux_SPI *spi_dev)
+{
+
+    struct spi_ioc_transfer mesg[2];
+    uint16_t val = 1600;
+    int ret, i;
+    uint16_t buf[1056];
+    memset(buf,  0, sizeof(buf));
+    memset(mesg, 0, sizeof(mesg));
+
+
+    mesg[0].bits_per_word = 16;
+    mesg[0].rx_buf        = (uintptr_t)NULL;
+    mesg[0].tx_buf        = (uintptr_t)&val;
+    mesg[0].len           = 2;
+    mesg[0].cs_change     = 0;
+//    mesg[0].delay_usecs   = 10000;
+
+
+    mesg[1].bits_per_word = 16;
+    mesg[1].rx_buf        = (uintptr_t)buf;
+    mesg[1].tx_buf        = (uintptr_t)NULL;
+    mesg[1].len           = 1056;
+    mesg[1].cs_change     = 1;
+
+
+
+    ret = spi_dev->send_tr(mesg, 2);
+
+
+    printf("send_tr ret == %d\n", ret);
+
+
+    for(i = 0; i < 1056; i++)
+        printf("buf[%d] == %d\n", i, buf[i]);
+
+}
+
+
+
+void init_spi_dev(Linux_SPI *spi_dev)
+{
+
+
+    if( spi_dev->dev_open("/dev/spidev1.0") != 0 )
+    {
+        printf("Error: %s\n", spi_dev->strerror(spi_dev->get_errno()));
+        exit(-1);
+    }
+
+
+    if( spi_dev->set_mode(SPI_MODE_1) != 0 )
+    {
+        printf("Error: %s\n", spi_dev->strerror(spi_dev->get_errno()));
+        exit(-1);
+    }
+
+
+    if( spi_dev->set_bits_per_word(16) != 0 )
+    {
+        printf("Error: %s\n", spi_dev->strerror(spi_dev->get_errno()));
+        exit(-1);
+    }
+
+
+    if( spi_dev->set_max_speed_hz(46875) != 0 )
+    {
+        printf("Error: %s\n", spi_dev->strerror(spi_dev->get_errno()));
+        exit(-1);
+    }
+
+
+}
+
+
+
+void run_test()
+{
+
+    Linux_SPI spi_dev;
+
+
+    init_spi_dev(&spi_dev);
+
+    test_read_write(&spi_dev);
+    test_send_tr(&spi_dev);
+
+
+    spi_dev.dev_close();
+}
+
+
+
 int main(int argc, char *argv[])
 {
 
     processing_cmd(argc, argv);
 
-
+    run_test();
 
     return EXIT_SUCCESS; // good job
 }
