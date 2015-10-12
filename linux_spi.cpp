@@ -216,7 +216,7 @@ int Linux_SPI::get_max_speed_hz(uint32_t *max_speed_hz)
 
 
 
-int Linux_SPI::read(const void *buf, uint32_t len)
+int Linux_SPI::read(void *buf, uint32_t len)
 {
 
     int ret;

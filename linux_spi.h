@@ -48,7 +48,7 @@ class Linux_SPI
         int  set_max_speed_hz(uint32_t max_speed_hz);
         int  get_max_speed_hz(uint32_t *max_speed_hz);
 
-        int  read(const void *buf, uint32_t len);
+        int  read(void *buf, uint32_t len);
         int  write(const void *buf, uint32_t len);
 
         int  send_tr(struct spi_ioc_transfer *trs, uint32_t num_trs);
