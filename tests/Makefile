@@ -1,4 +1,5 @@
 CPPFLAGS += -O2  -s  -Wall
+CPPFLAGS += -I..
 CPP       =  g++
 
 
@@ -23,7 +24,7 @@ clean:
 
 .PHONY: $(TESTS)
 $(TESTS):
-	$(CPP)  $@.cpp linux_spi.cpp -o $@  -DTEST_NAME='"$@"'  $(CPPFLAGS)
+	$(CPP)  $@.cpp ../linux_spi.cpp -o $@  -DTEST_NAME='"$@"'  $(CPPFLAGS)
 	@echo "  ---- Compiled $@ ----"
 	@echo ""
 
