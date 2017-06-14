@@ -55,8 +55,7 @@ enum SPI_Error{
 More details see: **[linux_spi.h](./linux_spi.h)**
 
 
-***
-<br/>
+
 ## Usage
 
 **To start working, perform the following steps:**
@@ -91,11 +90,10 @@ _spi_dev.dev_close();
 
 return 0; //good job
 ```
-More details can be found in the test application: **[linux_spi_test.cpp](./linux_spi_test.cpp)**
+More details can be found in the test application: **[linux_spi_test.cpp](./tests/linux_spi_test.cpp)**
 
 
-***
-<br/>
+
 ## License
 
-[BSD](./LICENSE).
+[BSD-3-Clause](./LICENSE).
